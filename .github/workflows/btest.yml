@@ -1,6 +1,6 @@
 # This workflow will execute the accompanying btests
 
-name: btest CI
+name: Package btests
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
