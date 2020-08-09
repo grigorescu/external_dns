@@ -38,7 +38,9 @@ jobs:
       run: sudo $GITHUB_WORKSPACE/.ci_scripts/test.sh
 
     - name: Generate docs
-      run: make -C $GITHUB_WORKSPACE/docs
+      run: |
+        source $GITHUB_WORKSPACE/.ci_scripts/set_env_path.sh
+        make -C $GITHUB_WORKSPACE/docs
       if: matrix.zeek == 'zeek'
 
     - name: Deploy docs
