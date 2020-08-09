@@ -51,4 +51,4 @@ done
 find . -name '*.rst' -exec sed -i '' -e 's% </scripts/base% <zeek:scripts/base%g' -e 's% </scripts/policy% <zeek:scripts/policy%g' {} +
 
 # Tell GitHub not to use Jekyll
-touch html/.nojekyll
+touch $GITHUB_WORKSPACE/docs/html/.nojekyll
