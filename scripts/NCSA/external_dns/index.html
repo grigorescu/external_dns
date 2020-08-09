@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Package: NCSA/external_dns &mdash; External Use of Sensitive Protocols source documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> External Use of Sensitive Protocols
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                source
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Package: NCSA/external_dns</a></li>
+<li><a class="reference internal" href="#zeek-package-for-external-dns">Zeek Package for External DNS</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#installing">Installing</a></li>
+<li><a class="reference internal" href="#running-the-tests">Running the tests</a></li>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
+<li><a class="reference internal" href="#versioning">Versioning</a></li>
+<li><a class="reference internal" href="#credits">Credits</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#acknowledgments">Acknowledgments</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">External Use of Sensitive Protocols</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Package: NCSA/external_dns</li>
+    
+    
+<li class="wy-breadcrumbs-aside">
+
+  
+    <a href="../../../_sources/scripts/NCSA/external_dns/index.rst.txt" rel="nofollow"> View page source</a>
+  
+
+</li>
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="package-ncsa-external-dns">
+<h1>Package: NCSA/external_dns<a class="headerlink" href="#package-ncsa-external-dns" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="zeek-package-for-external-dns">
+<h1>Zeek Package for External DNS<a class="headerlink" href="#zeek-package-for-external-dns" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://travis-ci.com/grigorescu/external_dns"><img alt="Build Status" src="https://travis-ci.com/grigorescu/external_dns.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://coveralls.io/repos/github/grigorescu/external_dns?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/grigorescu/external_dns/badge.svg?branch=master" /></a>
+<a class="reference external image-reference" href=":doc:`LICENSE&lt;./LICENSE&gt;`"><img alt="BSD license" src="https://img.shields.io/github/license/grigorescu/external_dns)" /></a>
+<p>![GitHub](</p>
+<p>Raises a notice when a client is observed querying an external DNS server</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>These instructions will get you a copy of the package up and running on your Zeek cluster. See development for notes on how to install the package in order to hack on or contribute to it.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This is a package designed to run with the [Zeek Network Security Monitor](<a class="reference external" href="https://zeek.org">https://zeek.org</a>). First, [get Zeek](<a class="reference external" href="https://zeek.org/get-zeek/">https://zeek.org/get-zeek/</a>). We strive to support both the current feature and LTS releases.</p>
+<p>The recommended installation method is via the [Zeek package manager, zkg](<a class="reference external" href="https://docs.zeek.org/projects/package-manager/en/stable/">https://docs.zeek.org/projects/package-manager/en/stable/</a>). On any recent system, run <cite>pip install zkg</cite>. After installation, run <cite>zkg autoconfig</cite>. For more information, see the [zkg documentation](<a class="reference external" href="https://docs.zeek.org/projects/package-manager/en/stable/quickstart.html">https://docs.zeek.org/projects/package-manager/en/stable/quickstart.html</a>).</p>
+</div>
+<div class="section" id="installing">
+<h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
+<p>To install the package, run:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">zkg</span> <span class="pre">install</span> <span class="pre">https://github.com/grigorescu/external_dns</span>
+<span class="pre">`</span></code></p>
+<p>If this is being installed on a cluster, install the package on the manager, then deploy it via:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">zeekctl</span> <span class="pre">deploy</span>
+<span class="pre">`</span></code></p>
+</div>
+<div class="section" id="running-the-tests">
+<h2>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h2>
+<p><cite>zkg</cite> will run the test suite before installing. To manually run the tests, go into the <cite>tests</cite> directory, and run <cite>make</cite>.</p>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<p>Please read [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for details on how to contribute.</p>
+</div>
+<div class="section" id="versioning">
+<h2>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h2>
+<p>We use [SemVer](<a class="reference external" href="http://semver.org/">http://semver.org/</a>) for versioning. For the versions available, see the [tags on this repository](../../tags).</p>
+</div>
+<div class="section" id="credits">
+<h2>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Justin Azoff &lt;<a class="reference external" href="mailto:jazoff&#37;&#52;&#48;illinois&#46;edu">jazoff<span>&#64;</span>illinois<span>&#46;</span>edu</a>&gt;</p></li>
+</ul>
+<p>See also the list of [contributors](contributors) who participated in this project.</p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>This project is licensed under the BSD license. See the [LICENSE](LICENSE) file for details.</p>
+</div>
+<div class="section" id="acknowledgments">
+<h2>Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>ESnet team for Zeek Package Cookie Cutter</p></li>
+</ul>
+<p><a class="reference internal" href="__load__.zeek.html"><span class="doc">NCSA/external_dns/__load__.zeek</span></a></p>
+<blockquote>
+<div><p>This is processed when a user explicitly loads the plugin’s script module
+through <cite>&#64;load NCSA/external_dns</cite>.
+Include code here that should execute at that point.</p>
+<p>This is the most common entry point to your plugin’s accompanying scripts.</p>
+<dl class="simple">
+<dt>File load order, always happens</dt><dd><ol class="arabic simple">
+<li><p>Zeek startup</p></li>
+<li><p>Plugin activation</p></li>
+<li><p>__preload__.zeek always gets loaded</p></li>
+<li><p>__load__.zeek always gets loaded</p></li>
+</ol>
+</dd>
+<dt>ONLY IF the plugin gets loaded via <cite>&#64;load NCSA/external_dns</cite>, this continues:</dt><dd><ol class="arabic simple" start="5">
+<li><p>&#64;load NCSA/external_dns/__load__.zeek &lt;– YOU ARE HERE</p></li>
+</ol>
+</dd>
+</dl>
+</div></blockquote>
+<p><a class="reference internal" href="main.zeek.html"><span class="doc">NCSA/external_dns/main.zeek</span></a></p>
+<blockquote>
+<div><p>Raises a notice when a client is observed querying an external DNS server</p>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, ESnet
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

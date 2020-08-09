@@ -1,0 +1,67 @@
+:tocdepth: 3
+
+NCSA/external_dns/main.zeek
+===========================
+.. zeek:namespace:: DNS
+
+Raises a notice when a client is observed querying an external DNS server
+
+:Namespace: DNS
+:Imports: :doc:`base/frameworks/notice </scripts/base/frameworks/notice/index>`, :doc:`base/protocols/dns </scripts/base/protocols/dns/index>`
+
+Summary
+~~~~~~~
+Runtime Options
+###############
+===================================================================== =========================================================
+:zeek:id:`DNS::ignore_external`: :zeek:type:`set` :zeek:attr:`&redef` Ignore the following servers
+:zeek:id:`DNS::local_countries`: :zeek:type:`set` :zeek:attr:`&redef` Anything not in this list is considered a foreign country
+===================================================================== =========================================================
+
+Redefinitions
+#############
+============================================ =
+:zeek:type:`DNS::Info`: :zeek:type:`record`  
+:zeek:type:`Notice::Type`: :zeek:type:`enum` 
+============================================ =
+
+
+Detailed Interface
+~~~~~~~~~~~~~~~~~~
+Runtime Options
+###############
+.. zeek:id:: DNS::ignore_external
+
+   :Type: :zeek:type:`set` [:zeek:type:`subnet`]
+   :Attributes: :zeek:attr:`&redef`
+   :Default:
+
+      ::
+
+         {
+            8.8.4.4/32,
+            208.67.222.222/32,
+            208.67.220.123/32,
+            8.8.8.8/32,
+            208.67.220.220/32
+         }
+
+
+   Ignore the following servers
+
+.. zeek:id:: DNS::local_countries
+
+   :Type: :zeek:type:`set` [:zeek:type:`string`]
+   :Attributes: :zeek:attr:`&redef`
+   :Default:
+
+      ::
+
+         {
+            "US"
+         }
+
+
+   Anything not in this list is considered a foreign country
+
+
