@@ -1,0 +1,8 @@
+[package]
+description = Raises a notice when a client is observed querying an external DNS server
+credits = Justin Azoff <jazoff@illinois.edu>
+tags = network, evil, rfc3514
+
+test_command = cd tests && make
+
+script_dir = ./scripts
