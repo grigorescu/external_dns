@@ -88,15 +88,9 @@
               <!-- Local TOC -->
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Package: base/frameworks/logging</a></li>
-<li><a class="reference internal" href="#package-base-bif">Package: base/bif</a></li>
-<li><a class="reference internal" href="#package-base-bif-plugins">Package: base/bif/plugins</a></li>
 <li><a class="reference internal" href="#package-base-frameworks-logging-postprocessors">Package: base/frameworks/logging/postprocessors</a></li>
 <li><a class="reference internal" href="#package-base-frameworks-broker">Package: base/frameworks/broker</a></li>
-<li><a class="reference internal" href="#package-base-frameworks-supervisor">Package: base/frameworks/supervisor</a></li>
-<li><a class="reference internal" href="#package-base-frameworks-input">Package: base/frameworks/input</a></li>
-<li><a class="reference internal" href="#package-base-frameworks-analyzer">Package: base/frameworks/analyzer</a></li>
-<li><a class="reference internal" href="#package-base-frameworks-files">Package: base/frameworks/files</a></li>
-<li><a class="reference internal" href="#package-base-frameworks-files-magic">Package: base/frameworks/files/magic</a></li>
+<li><a class="reference internal" href="#package-base-protocols-dns">Package: base/protocols/dns</a></li>
 <li><a class="reference internal" href="#package-ncsa-external-dns">Package: NCSA/external_dns</a></li>
 <li><a class="reference internal" href="#zeek-package-for-external-dns">Zeek Package for External DNS</a><ul>
 <li><a class="reference internal" href="#getting-started">Getting Started</a></li>
@@ -113,7 +107,13 @@
 <li><a class="reference internal" href="#package-base-frameworks-notice">Package: base/frameworks/notice</a></li>
 <li><a class="reference internal" href="#package-base-frameworks-cluster">Package: base/frameworks/cluster</a></li>
 <li><a class="reference internal" href="#package-base-frameworks-control">Package: base/frameworks/control</a></li>
-<li><a class="reference internal" href="#package-base-protocols-dns">Package: base/protocols/dns</a></li>
+<li><a class="reference internal" href="#package-base-frameworks-supervisor">Package: base/frameworks/supervisor</a></li>
+<li><a class="reference internal" href="#package-base-frameworks-input">Package: base/frameworks/input</a></li>
+<li><a class="reference internal" href="#package-base-frameworks-analyzer">Package: base/frameworks/analyzer</a></li>
+<li><a class="reference internal" href="#package-base-frameworks-files">Package: base/frameworks/files</a></li>
+<li><a class="reference internal" href="#package-base-bif">Package: base/bif</a></li>
+<li><a class="reference internal" href="#package-base-frameworks-files-magic">Package: base/frameworks/files/magic</a></li>
+<li><a class="reference internal" href="#package-base-bif-plugins">Package: base/bif/plugins</a></li>
 </ul>
 </div>
             
@@ -255,6 +255,324 @@ introduction mentioned above.</p>
 <blockquote>
 <div><p>Interface for the None log writer. This writer is mainly for debugging.</p>
 </div></blockquote>
+</div>
+<div class="section" id="package-base-frameworks-logging-postprocessors">
+<h1>Package: base/frameworks/logging/postprocessors<a class="headerlink" href="#package-base-frameworks-logging-postprocessors" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/frameworks/logging/postprocessors/__load__.zeek</span></p>
+<p><span class="xref std std-doc">/scripts/base/frameworks/logging/postprocessors/scp.zeek</span></p>
+<blockquote>
+<div><p>This script defines a postprocessing function that can be applied
+to a logging filter in order to automatically SCP (secure copy)
+a log stream (or a subset of it) to a remote host at configurable
+rotation time intervals.  Generally, to use this functionality
+you must handle the <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/bif/event.bif.zeek.html#id-zeek_init" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">zeek_init</span></code></a> event and do the following
+in your handler:</p>
+<ol class="arabic simple">
+<li><p>Create a new <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/main.zeek.html#type-Log::Filter" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-type docutils literal notranslate"><span class="pre">Log::Filter</span></code></a> record that defines a name/path,
+rotation interval, and set the <code class="docutils literal notranslate"><span class="pre">postprocessor</span></code> to
+<a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/scp.zeek.html#id-Log::scp_postprocessor" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::scp_postprocessor</span></code></a>.</p></li>
+<li><p>Add the filter to a logging stream using <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/main.zeek.html#id-Log::add_filter" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::add_filter</span></code></a>.</p></li>
+<li><p>Add a table entry to <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/scp.zeek.html#id-Log::scp_destinations" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::scp_destinations</span></code></a> for the filter’s
+writer/path pair which defines a set of <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/scp.zeek.html#type-Log::SCPDestination" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-type docutils literal notranslate"><span class="pre">Log::SCPDestination</span></code></a>
+records.</p></li>
+</ol>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/logging/postprocessors/sftp.zeek</span></p>
+<blockquote>
+<div><p>This script defines a postprocessing function that can be applied
+to a logging filter in order to automatically SFTP
+a log stream (or a subset of it) to a remote host at configurable
+rotation time intervals.  Generally, to use this functionality
+you must handle the <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/bif/event.bif.zeek.html#id-zeek_init" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">zeek_init</span></code></a> event and do the following
+in your handler:</p>
+<ol class="arabic simple">
+<li><p>Create a new <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/main.zeek.html#type-Log::Filter" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-type docutils literal notranslate"><span class="pre">Log::Filter</span></code></a> record that defines a name/path,
+rotation interval, and set the <code class="docutils literal notranslate"><span class="pre">postprocessor</span></code> to
+<a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/sftp.zeek.html#id-Log::sftp_postprocessor" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::sftp_postprocessor</span></code></a>.</p></li>
+<li><p>Add the filter to a logging stream using <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/main.zeek.html#id-Log::add_filter" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::add_filter</span></code></a>.</p></li>
+<li><p>Add a table entry to <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/sftp.zeek.html#id-Log::sftp_destinations" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::sftp_destinations</span></code></a> for the filter’s
+writer/path pair which defines a set of <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/sftp.zeek.html#type-Log::SFTPDestination" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-type docutils literal notranslate"><span class="pre">Log::SFTPDestination</span></code></a>
+records.</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="package-base-frameworks-broker">
+<h1>Package: base/frameworks/broker<a class="headerlink" href="#package-base-frameworks-broker" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/frameworks/broker/__load__.zeek</span></p>
+<p><span class="xref std std-doc">/scripts/base/frameworks/broker/main.zeek</span></p>
+<blockquote>
+<div><p>The Broker-based communication API and its various options.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/broker/store.zeek</span></p>
+<blockquote>
+<div><p>The Broker-based data store API and its various options.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/broker/log.zeek</span></p>
+</div>
+<div class="section" id="package-base-protocols-dns">
+<h1>Package: base/protocols/dns<a class="headerlink" href="#package-base-protocols-dns" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/protocols/dns/__load__.zeek</span></p>
+<p><span class="xref std std-doc">/scripts/base/protocols/dns/consts.zeek</span></p>
+<blockquote>
+<div><p>Types, errors, and fields for analyzing DNS data.  A helper file
+for DNS analysis scripts.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/protocols/dns/main.zeek</span></p>
+<blockquote>
+<div><p>Base DNS analysis script which tracks and logs DNS queries along with
+their responses.</p>
+</div></blockquote>
+</div>
+<div class="section" id="package-ncsa-external-dns">
+<h1>Package: NCSA/external_dns<a class="headerlink" href="#package-ncsa-external-dns" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="zeek-package-for-external-dns">
+<h1>Zeek Package for External DNS<a class="headerlink" href="#zeek-package-for-external-dns" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://github.com/grigorescu/external_dns/actions"><img alt="Build Status" src="https://github.com/grigorescu/external_dns/workflows/btests/badge.svg" /></a>
+<a class="reference external image-reference" href="https://github.io/grigorescu/external_dns/"><img alt="Documentation Status" src="https://github.com/grigorescu/external_dns/workflows/Documentation/badge.svg" /></a>
+<a class="reference external image-reference" href="https://coveralls.io/repos/github/grigorescu/external_dns?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/grigorescu/external_dns/badge.svg?branch=master" /></a>
+<a class="reference external image-reference" href="./LICENSE"><img alt="BSD license" src="https://img.shields.io/github/license/grigorescu/external_dns" /></a>
+<p>Raises a notice when a client is observed querying an external DNS server</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>These instructions will get you a copy of the package up and running on your Zeek cluster. See development for notes on how to install the package in order to hack on or contribute to it.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This is a package designed to run with the <a class="reference external" href="https://zeek.org">Zeek Network Security Monitor</a>. First, <a class="reference external" href="https://zeek.org/get-zeek/">get Zeek</a>. We strive to support both the current feature and LTS releases.</p>
+<p>The recommended installation method is via the <a class="reference external" href="https://docs.zeek.org/projects/package-manager/en/stable/">Zeek package manager, zkg</a>. On any recent system, run <cite>pip install zkg</cite>. After installation, run <cite>zkg autoconfig</cite>. For more information, see the <a class="reference external" href="https://docs.zeek.org/projects/package-manager/en/stable/quickstart.html">zkg documentation</a>.</p>
+</div>
+<div class="section" id="installing">
+<h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
+<p>To install the package, run:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>zkg install https://github.com/grigorescu/external_dns
+</pre></div>
+</div>
+<p>If this is being installed on a cluster, install the package on the manager, then deploy it via:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>zeekctl deploy
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-the-tests">
+<h2>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h2>
+<p><cite>zkg</cite> will run the test suite before installing. To manually run the tests, go into the <cite>tests</cite> directory, and run <cite>make</cite>.</p>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<p>Please read <a href="#id1"><span class="problematic" id="id2">`:doc:./docs/CONTRIBUTING.md`_</span></a> for details on how to contribute.</p>
+</div>
+<div class="section" id="versioning">
+<h2>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h2>
+<p>We use <a class="reference external" href="http://semver.org/">SemVer</a> for versioning. For the versions available, see the <a class="reference external" href="https://github.com/grigorescu/external_dns/tags">tags on this repository</a>.</p>
+</div>
+<div class="section" id="credits">
+<h2>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Justin Azoff &lt;<a class="reference external" href="mailto:jazoff&#37;&#52;&#48;illinois&#46;edu">jazoff<span>&#64;</span>illinois<span>&#46;</span>edu</a>&gt;</p></li>
+</ul>
+<p>See also the list of <a href="#id3"><span class="problematic" id="id4">`:doc:./contributors`_</span></a> who participated in this project.</p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>This project is licensed under the BSD license. See the <a href="#id5"><span class="problematic" id="id6">`:doc:./LICENSE`_</span></a> file for details.</p>
+</div>
+<div class="section" id="acknowledgments">
+<h2>Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>ESnet team for Zeek Package Cookie Cutter</p></li>
+</ul>
+<p><a class="reference internal" href="scripts/NCSA/external_dns/__load__.zeek.html"><span class="doc">NCSA/external_dns/__load__.zeek</span></a></p>
+<blockquote>
+<div><p>This is processed when a user explicitly loads the plugin’s script module
+through <cite>&#64;load NCSA/external_dns</cite>.
+Include code here that should execute at that point.</p>
+<p>This is the most common entry point to your plugin’s accompanying scripts.</p>
+<dl class="simple">
+<dt>File load order, always happens</dt><dd><ol class="arabic simple">
+<li><p>Zeek startup</p></li>
+<li><p>Plugin activation</p></li>
+<li><p>__preload__.zeek always gets loaded</p></li>
+<li><p>__load__.zeek always gets loaded</p></li>
+</ol>
+</dd>
+<dt>ONLY IF the plugin gets loaded via <cite>&#64;load NCSA/external_dns</cite>, this continues:</dt><dd><ol class="arabic simple" start="5">
+<li><p>&#64;load NCSA/external_dns/__load__.zeek &lt;– YOU ARE HERE</p></li>
+</ol>
+</dd>
+</dl>
+</div></blockquote>
+<p><a class="reference internal" href="scripts/NCSA/external_dns/main.zeek.html"><span class="doc">NCSA/external_dns/main.zeek</span></a></p>
+<blockquote>
+<div><p>Raises a notice when a client is observed querying an external DNS server</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="package-base-frameworks-notice">
+<h1>Package: base/frameworks/notice<a class="headerlink" href="#package-base-frameworks-notice" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/frameworks/notice/__load__.zeek</span></p>
+<p><span class="xref std std-doc">/scripts/base/frameworks/notice/main.zeek</span></p>
+<blockquote>
+<div><p>This is the notice framework which enables Zeek to “notice” things which
+are odd or potentially bad.  Decisions of the meaning of various notices
+need to be done per site because Zeek does not ship with assumptions about
+what is bad activity for sites.  More extensive documentation about using
+the notice framework can be found in <span class="xref std std-doc">/frameworks/notice</span>.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/notice/weird.zeek</span></p>
+<blockquote>
+<div><p>This script provides a default set of actions to take for “weird activity”
+events generated from Zeek’s event engine.  Weird activity is defined as
+unusual or exceptional activity that can indicate malformed connections,
+traffic that doesn’t conform to a particular protocol, malfunctioning
+or misconfigured hardware, or even an attacker attempting to avoid/confuse
+a sensor.  Without context, it’s hard to judge whether a particular
+category of weird activity is interesting, but this script provides
+a starting point for the user.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/notice/actions/email_admin.zeek</span></p>
+<blockquote>
+<div><p>Adds a new notice action type which can be used to email notices
+to the administrators of a particular address space as set by
+<a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/utils/site.zeek.html#id-Site::local_admins" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Site::local_admins</span></code></a> if the notice contains a source
+or destination address that lies within their space.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/notice/actions/page.zeek</span></p>
+<blockquote>
+<div><p>Allows configuration of a pager email address to which notices can be sent.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/notice/actions/add-geodata.zeek</span></p>
+<blockquote>
+<div><p>This script adds geographic location data to notices for the “remote”
+host in a connection.  It does make the assumption that one of the
+addresses in a connection is “local” and one is “remote” which is
+probably a safe assumption to make in most cases.  If both addresses
+are remote, it will use the $src address.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/notice/actions/pp-alarms.zeek</span></p>
+<blockquote>
+<div><p>Notice extension that mails out a pretty-printed version of alarm.log
+in regular intervals, formatted for better human readability. If activated,
+that replaces the default summary mail having the raw log output.</p>
+</div></blockquote>
+</div>
+<div class="section" id="package-base-frameworks-cluster">
+<h1>Package: base/frameworks/cluster<a class="headerlink" href="#package-base-frameworks-cluster" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/frameworks/cluster/__load__.zeek</span></p>
+<p><span class="xref std std-doc">/scripts/base/frameworks/cluster/main.zeek</span></p>
+<blockquote>
+<div><p>A framework for establishing and controlling a cluster of Zeek instances.
+In order to use the cluster framework, a script named
+<code class="docutils literal notranslate"><span class="pre">cluster-layout.zeek</span></code> must exist somewhere in Zeek’s script search path
+which has a cluster definition of the <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/cluster/main.zeek.html#id-Cluster::nodes" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Cluster::nodes</span></code></a> variable.
+The <code class="docutils literal notranslate"><span class="pre">CLUSTER_NODE</span></code> environment variable or <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/cluster/main.zeek.html#id-Cluster::node" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Cluster::node</span></code></a>
+must also be sent and the cluster framework loaded as a package like
+<code class="docutils literal notranslate"><span class="pre">&#64;load</span> <span class="pre">base/frameworks/cluster</span></code>.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/cluster/pools.zeek</span></p>
+<blockquote>
+<div><p>Defines an interface for managing pools of cluster nodes.  Pools are
+a useful way to distribute work or data among nodes within a cluster.</p>
+</div></blockquote>
+</div>
+<div class="section" id="package-base-frameworks-control">
+<h1>Package: base/frameworks/control<a class="headerlink" href="#package-base-frameworks-control" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/frameworks/control/__load__.zeek</span></p>
+<p><span class="xref std std-doc">/scripts/base/frameworks/control/main.zeek</span></p>
+<blockquote>
+<div><p>The control framework provides the foundation for providing “commands”
+that can be taken remotely at runtime to modify a running Zeek instance
+or collect information from the running instance.</p>
+</div></blockquote>
+</div>
+<div class="section" id="package-base-frameworks-supervisor">
+<h1>Package: base/frameworks/supervisor<a class="headerlink" href="#package-base-frameworks-supervisor" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/frameworks/supervisor/api.zeek</span></p>
+<blockquote>
+<div><p>The Zeek process supervision API.
+This API was introduced in Zeek 3.1.0 and considered unstable until 4.0.0.
+That is, it may change in various incompatible ways without warning or
+deprecation until the stable 4.0.0 release.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/supervisor/__load__.zeek</span></p>
+<p><span class="xref std std-doc">/scripts/base/frameworks/supervisor/control.zeek</span></p>
+<blockquote>
+<div><p>The Zeek process supervision (remote) control API.  This defines a Broker topic
+prefix and events that can be used to control an external Zeek supervisor process.
+This API was introduced in Zeek 3.1.0 and considered unstable until 4.0.0.
+That is, it may change in various incompatible ways without warning or
+deprecation until the stable 4.0.0 release.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/supervisor/main.zeek</span></p>
+<blockquote>
+<div><p>Implements Zeek process supervision API and default behavior for its
+associated (remote) control events.</p>
+</div></blockquote>
+</div>
+<div class="section" id="package-base-frameworks-input">
+<h1>Package: base/frameworks/input<a class="headerlink" href="#package-base-frameworks-input" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/frameworks/input/__load__.zeek</span></p>
+<p><span class="xref std std-doc">/scripts/base/frameworks/input/main.zeek</span></p>
+<blockquote>
+<div><p>The input framework provides a way to read previously stored data either
+as an event stream or into a Zeek table.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/ascii.zeek</span></p>
+<blockquote>
+<div><p>Interface for the ascii input reader.</p>
+<p>The defaults are set to match Zeek’s ASCII output.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/raw.zeek</span></p>
+<blockquote>
+<div><p>Interface for the raw input reader.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/benchmark.zeek</span></p>
+<blockquote>
+<div><p>Interface for the benchmark input reader.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/binary.zeek</span></p>
+<blockquote>
+<div><p>Interface for the binary input reader.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/config.zeek</span></p>
+<blockquote>
+<div><p>Interface for the config input reader.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/sqlite.zeek</span></p>
+<blockquote>
+<div><p>Interface for the SQLite input reader. Redefinable options are available
+to tweak the input format of the SQLite reader.</p>
+<p>See <span class="xref std std-doc">/frameworks/logging-input-sqlite</span> for an introduction on how to
+use the SQLite reader.</p>
+<p>When using the SQLite reader, you have to specify the SQL query that returns
+the desired data by setting <code class="docutils literal notranslate"><span class="pre">query</span></code> in the <code class="docutils literal notranslate"><span class="pre">config</span></code> table. See the
+introduction mentioned above for an example.</p>
+</div></blockquote>
+</div>
+<div class="section" id="package-base-frameworks-analyzer">
+<h1>Package: base/frameworks/analyzer<a class="headerlink" href="#package-base-frameworks-analyzer" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/frameworks/analyzer/__load__.zeek</span></p>
+<p><span class="xref std std-doc">/scripts/base/frameworks/analyzer/main.zeek</span></p>
+<blockquote>
+<div><p>Framework for managing Zeek’s protocol analyzers.</p>
+<p>The analyzer framework allows to dynamically enable or disable analyzers, as
+well as to manage the well-known ports which automatically activate a
+particular analyzer for new connections.</p>
+<p>Protocol analyzers are identified by unique tags of type
+<a class="reference external" href="https://docs.zeek.org/en/current/script-reference/proto-analyzers.html#type-Analyzer::Tag" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-type docutils literal notranslate"><span class="pre">Analyzer::Tag</span></code></a>, such as <a class="reference external" href="https://docs.zeek.org/en/current/script-reference/proto-analyzers.html#enum-Analyzer::ANALYZER_HTTP" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-enum docutils literal notranslate"><span class="pre">Analyzer::ANALYZER_HTTP</span></code></a>.
+These tags are defined internally by
+the analyzers themselves, and documented in their analyzer-specific
+description along with the events that they generate.</p>
+</div></blockquote>
+</div>
+<div class="section" id="package-base-frameworks-files">
+<h1>Package: base/frameworks/files<a class="headerlink" href="#package-base-frameworks-files" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/frameworks/files/__load__.zeek</span></p>
+<p><span class="xref std std-doc">/scripts/base/frameworks/files/main.zeek</span></p>
+<blockquote>
+<div><p>An interface for driving the analysis of files, possibly independent of
+any network protocol over which they’re transported.</p>
+</div></blockquote>
+<p><span class="xref std std-doc">/scripts/base/frameworks/files/magic/__load__.zeek</span></p>
 </div>
 <div class="section" id="package-base-bif">
 <h1>Package: base/bif<a class="headerlink" href="#package-base-bif" title="Permalink to this headline">¶</a></h1>
@@ -487,6 +805,10 @@ TCP analysis.)</p>
 <p><span class="xref std std-doc">/scripts/base/bif/plugins/Zeek_NoneWriter.none.bif.zeek</span></p>
 <p><span class="xref std std-doc">/scripts/base/bif/plugins/Zeek_SQLiteWriter.sqlite.bif.zeek</span></p>
 </div>
+<div class="section" id="package-base-frameworks-files-magic">
+<h1>Package: base/frameworks/files/magic<a class="headerlink" href="#package-base-frameworks-files-magic" title="Permalink to this headline">¶</a></h1>
+<p><span class="xref std std-doc">/scripts/base/frameworks/files/magic/__load__.zeek</span></p>
+</div>
 <div class="section" id="package-base-bif-plugins">
 <h1>Package: base/bif/plugins<a class="headerlink" href="#package-base-bif-plugins" title="Permalink to this headline">¶</a></h1>
 <p><span class="xref std std-doc">/scripts/base/bif/plugins/Zeek_SNMP.types.bif.zeek</span></p>
@@ -614,328 +936,6 @@ TCP analysis.)</p>
 <p><span class="xref std std-doc">/scripts/base/bif/plugins/Zeek_AsciiWriter.ascii.bif.zeek</span></p>
 <p><span class="xref std std-doc">/scripts/base/bif/plugins/Zeek_NoneWriter.none.bif.zeek</span></p>
 <p><span class="xref std std-doc">/scripts/base/bif/plugins/Zeek_SQLiteWriter.sqlite.bif.zeek</span></p>
-</div>
-<div class="section" id="package-base-frameworks-logging-postprocessors">
-<h1>Package: base/frameworks/logging/postprocessors<a class="headerlink" href="#package-base-frameworks-logging-postprocessors" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/frameworks/logging/postprocessors/__load__.zeek</span></p>
-<p><span class="xref std std-doc">/scripts/base/frameworks/logging/postprocessors/scp.zeek</span></p>
-<blockquote>
-<div><p>This script defines a postprocessing function that can be applied
-to a logging filter in order to automatically SCP (secure copy)
-a log stream (or a subset of it) to a remote host at configurable
-rotation time intervals.  Generally, to use this functionality
-you must handle the <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/bif/event.bif.zeek.html#id-zeek_init" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">zeek_init</span></code></a> event and do the following
-in your handler:</p>
-<ol class="arabic simple">
-<li><p>Create a new <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/main.zeek.html#type-Log::Filter" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-type docutils literal notranslate"><span class="pre">Log::Filter</span></code></a> record that defines a name/path,
-rotation interval, and set the <code class="docutils literal notranslate"><span class="pre">postprocessor</span></code> to
-<a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/scp.zeek.html#id-Log::scp_postprocessor" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::scp_postprocessor</span></code></a>.</p></li>
-<li><p>Add the filter to a logging stream using <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/main.zeek.html#id-Log::add_filter" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::add_filter</span></code></a>.</p></li>
-<li><p>Add a table entry to <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/scp.zeek.html#id-Log::scp_destinations" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::scp_destinations</span></code></a> for the filter’s
-writer/path pair which defines a set of <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/scp.zeek.html#type-Log::SCPDestination" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-type docutils literal notranslate"><span class="pre">Log::SCPDestination</span></code></a>
-records.</p></li>
-</ol>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/logging/postprocessors/sftp.zeek</span></p>
-<blockquote>
-<div><p>This script defines a postprocessing function that can be applied
-to a logging filter in order to automatically SFTP
-a log stream (or a subset of it) to a remote host at configurable
-rotation time intervals.  Generally, to use this functionality
-you must handle the <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/bif/event.bif.zeek.html#id-zeek_init" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">zeek_init</span></code></a> event and do the following
-in your handler:</p>
-<ol class="arabic simple">
-<li><p>Create a new <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/main.zeek.html#type-Log::Filter" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-type docutils literal notranslate"><span class="pre">Log::Filter</span></code></a> record that defines a name/path,
-rotation interval, and set the <code class="docutils literal notranslate"><span class="pre">postprocessor</span></code> to
-<a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/sftp.zeek.html#id-Log::sftp_postprocessor" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::sftp_postprocessor</span></code></a>.</p></li>
-<li><p>Add the filter to a logging stream using <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/main.zeek.html#id-Log::add_filter" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::add_filter</span></code></a>.</p></li>
-<li><p>Add a table entry to <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/sftp.zeek.html#id-Log::sftp_destinations" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Log::sftp_destinations</span></code></a> for the filter’s
-writer/path pair which defines a set of <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/logging/postprocessors/sftp.zeek.html#type-Log::SFTPDestination" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-type docutils literal notranslate"><span class="pre">Log::SFTPDestination</span></code></a>
-records.</p></li>
-</ol>
-</div></blockquote>
-</div>
-<div class="section" id="package-base-frameworks-broker">
-<h1>Package: base/frameworks/broker<a class="headerlink" href="#package-base-frameworks-broker" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/frameworks/broker/__load__.zeek</span></p>
-<p><span class="xref std std-doc">/scripts/base/frameworks/broker/main.zeek</span></p>
-<blockquote>
-<div><p>The Broker-based communication API and its various options.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/broker/store.zeek</span></p>
-<blockquote>
-<div><p>The Broker-based data store API and its various options.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/broker/log.zeek</span></p>
-</div>
-<div class="section" id="package-base-frameworks-supervisor">
-<h1>Package: base/frameworks/supervisor<a class="headerlink" href="#package-base-frameworks-supervisor" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/frameworks/supervisor/api.zeek</span></p>
-<blockquote>
-<div><p>The Zeek process supervision API.
-This API was introduced in Zeek 3.1.0 and considered unstable until 4.0.0.
-That is, it may change in various incompatible ways without warning or
-deprecation until the stable 4.0.0 release.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/supervisor/__load__.zeek</span></p>
-<p><span class="xref std std-doc">/scripts/base/frameworks/supervisor/control.zeek</span></p>
-<blockquote>
-<div><p>The Zeek process supervision (remote) control API.  This defines a Broker topic
-prefix and events that can be used to control an external Zeek supervisor process.
-This API was introduced in Zeek 3.1.0 and considered unstable until 4.0.0.
-That is, it may change in various incompatible ways without warning or
-deprecation until the stable 4.0.0 release.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/supervisor/main.zeek</span></p>
-<blockquote>
-<div><p>Implements Zeek process supervision API and default behavior for its
-associated (remote) control events.</p>
-</div></blockquote>
-</div>
-<div class="section" id="package-base-frameworks-input">
-<h1>Package: base/frameworks/input<a class="headerlink" href="#package-base-frameworks-input" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/frameworks/input/__load__.zeek</span></p>
-<p><span class="xref std std-doc">/scripts/base/frameworks/input/main.zeek</span></p>
-<blockquote>
-<div><p>The input framework provides a way to read previously stored data either
-as an event stream or into a Zeek table.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/ascii.zeek</span></p>
-<blockquote>
-<div><p>Interface for the ascii input reader.</p>
-<p>The defaults are set to match Zeek’s ASCII output.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/raw.zeek</span></p>
-<blockquote>
-<div><p>Interface for the raw input reader.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/benchmark.zeek</span></p>
-<blockquote>
-<div><p>Interface for the benchmark input reader.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/binary.zeek</span></p>
-<blockquote>
-<div><p>Interface for the binary input reader.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/config.zeek</span></p>
-<blockquote>
-<div><p>Interface for the config input reader.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/input/readers/sqlite.zeek</span></p>
-<blockquote>
-<div><p>Interface for the SQLite input reader. Redefinable options are available
-to tweak the input format of the SQLite reader.</p>
-<p>See <span class="xref std std-doc">/frameworks/logging-input-sqlite</span> for an introduction on how to
-use the SQLite reader.</p>
-<p>When using the SQLite reader, you have to specify the SQL query that returns
-the desired data by setting <code class="docutils literal notranslate"><span class="pre">query</span></code> in the <code class="docutils literal notranslate"><span class="pre">config</span></code> table. See the
-introduction mentioned above for an example.</p>
-</div></blockquote>
-</div>
-<div class="section" id="package-base-frameworks-analyzer">
-<h1>Package: base/frameworks/analyzer<a class="headerlink" href="#package-base-frameworks-analyzer" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/frameworks/analyzer/__load__.zeek</span></p>
-<p><span class="xref std std-doc">/scripts/base/frameworks/analyzer/main.zeek</span></p>
-<blockquote>
-<div><p>Framework for managing Zeek’s protocol analyzers.</p>
-<p>The analyzer framework allows to dynamically enable or disable analyzers, as
-well as to manage the well-known ports which automatically activate a
-particular analyzer for new connections.</p>
-<p>Protocol analyzers are identified by unique tags of type
-<a class="reference external" href="https://docs.zeek.org/en/current/script-reference/proto-analyzers.html#type-Analyzer::Tag" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-type docutils literal notranslate"><span class="pre">Analyzer::Tag</span></code></a>, such as <a class="reference external" href="https://docs.zeek.org/en/current/script-reference/proto-analyzers.html#enum-Analyzer::ANALYZER_HTTP" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-enum docutils literal notranslate"><span class="pre">Analyzer::ANALYZER_HTTP</span></code></a>.
-These tags are defined internally by
-the analyzers themselves, and documented in their analyzer-specific
-description along with the events that they generate.</p>
-</div></blockquote>
-</div>
-<div class="section" id="package-base-frameworks-files">
-<h1>Package: base/frameworks/files<a class="headerlink" href="#package-base-frameworks-files" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/frameworks/files/__load__.zeek</span></p>
-<p><span class="xref std std-doc">/scripts/base/frameworks/files/main.zeek</span></p>
-<blockquote>
-<div><p>An interface for driving the analysis of files, possibly independent of
-any network protocol over which they’re transported.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/files/magic/__load__.zeek</span></p>
-</div>
-<div class="section" id="package-base-frameworks-files-magic">
-<h1>Package: base/frameworks/files/magic<a class="headerlink" href="#package-base-frameworks-files-magic" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/frameworks/files/magic/__load__.zeek</span></p>
-</div>
-<div class="section" id="package-ncsa-external-dns">
-<h1>Package: NCSA/external_dns<a class="headerlink" href="#package-ncsa-external-dns" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="zeek-package-for-external-dns">
-<h1>Zeek Package for External DNS<a class="headerlink" href="#zeek-package-for-external-dns" title="Permalink to this headline">¶</a></h1>
-<a class="reference external image-reference" href="https://github.com/grigorescu/external_dns/actions"><img alt="Build Status" src="https://github.com/grigorescu/external_dns/workflows/btests/badge.svg" /></a>
-<a class="reference external image-reference" href="https://github.io/grigorescu/external_dns/"><img alt="Documentation Status" src="https://github.com/grigorescu/external_dns/workflows/Documentation/badge.svg" /></a>
-<a class="reference external image-reference" href="https://coveralls.io/repos/github/grigorescu/external_dns?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/grigorescu/external_dns/badge.svg?branch=master" /></a>
-<a class="reference external image-reference" href="./LICENSE"><img alt="BSD license" src="https://img.shields.io/github/license/grigorescu/external_dns" /></a>
-<p>Raises a notice when a client is observed querying an external DNS server</p>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<p>These instructions will get you a copy of the package up and running on your Zeek cluster. See development for notes on how to install the package in order to hack on or contribute to it.</p>
-</div>
-<div class="section" id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>This is a package designed to run with the <a class="reference external" href="https://zeek.org">Zeek Network Security Monitor</a>. First, <a class="reference external" href="https://zeek.org/get-zeek/">get Zeek</a>. We strive to support both the current feature and LTS releases.</p>
-<p>The recommended installation method is via the <a class="reference external" href="https://docs.zeek.org/projects/package-manager/en/stable/">Zeek package manager, zkg</a>. On any recent system, run <cite>pip install zkg</cite>. After installation, run <cite>zkg autoconfig</cite>. For more information, see the <a class="reference external" href="https://docs.zeek.org/projects/package-manager/en/stable/quickstart.html">zkg documentation</a>.</p>
-</div>
-<div class="section" id="installing">
-<h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
-<p>To install the package, run:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>zkg install https://github.com/grigorescu/external_dns
-</pre></div>
-</div>
-<p>If this is being installed on a cluster, install the package on the manager, then deploy it via:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>zeekctl deploy
-</pre></div>
-</div>
-</div>
-<div class="section" id="running-the-tests">
-<h2>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h2>
-<p><cite>zkg</cite> will run the test suite before installing. To manually run the tests, go into the <cite>tests</cite> directory, and run <cite>make</cite>.</p>
-</div>
-<div class="section" id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
-<p>Please read <a href="#id1"><span class="problematic" id="id2">`:doc:./docs/CONTRIBUTING.md`_</span></a> for details on how to contribute.</p>
-</div>
-<div class="section" id="versioning">
-<h2>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h2>
-<p>We use <a class="reference external" href="http://semver.org/">SemVer</a> for versioning. For the versions available, see the <a class="reference external" href="https://github.com/grigorescu/external_dns/tags">tags on this repository</a>.</p>
-</div>
-<div class="section" id="credits">
-<h2>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Justin Azoff &lt;<a class="reference external" href="mailto:jazoff&#37;&#52;&#48;illinois&#46;edu">jazoff<span>&#64;</span>illinois<span>&#46;</span>edu</a>&gt;</p></li>
-</ul>
-<p>See also the list of <a href="#id3"><span class="problematic" id="id4">`:doc:./contributors`_</span></a> who participated in this project.</p>
-</div>
-<div class="section" id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
-<p>This project is licensed under the BSD license. See the <a href="#id5"><span class="problematic" id="id6">`:doc:./LICENSE`_</span></a> file for details.</p>
-</div>
-<div class="section" id="acknowledgments">
-<h2>Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>ESnet team for Zeek Package Cookie Cutter</p></li>
-</ul>
-<p><a class="reference internal" href="scripts/NCSA/external_dns/__load__.zeek.html"><span class="doc">NCSA/external_dns/__load__.zeek</span></a></p>
-<blockquote>
-<div><p>This is processed when a user explicitly loads the plugin’s script module
-through <cite>&#64;load NCSA/external_dns</cite>.
-Include code here that should execute at that point.</p>
-<p>This is the most common entry point to your plugin’s accompanying scripts.</p>
-<dl class="simple">
-<dt>File load order, always happens</dt><dd><ol class="arabic simple">
-<li><p>Zeek startup</p></li>
-<li><p>Plugin activation</p></li>
-<li><p>__preload__.zeek always gets loaded</p></li>
-<li><p>__load__.zeek always gets loaded</p></li>
-</ol>
-</dd>
-<dt>ONLY IF the plugin gets loaded via <cite>&#64;load NCSA/external_dns</cite>, this continues:</dt><dd><ol class="arabic simple" start="5">
-<li><p>&#64;load NCSA/external_dns/__load__.zeek &lt;– YOU ARE HERE</p></li>
-</ol>
-</dd>
-</dl>
-</div></blockquote>
-<p><a class="reference internal" href="scripts/NCSA/external_dns/main.zeek.html"><span class="doc">NCSA/external_dns/main.zeek</span></a></p>
-<blockquote>
-<div><p>Raises a notice when a client is observed querying an external DNS server</p>
-</div></blockquote>
-</div>
-</div>
-<div class="section" id="package-base-frameworks-notice">
-<h1>Package: base/frameworks/notice<a class="headerlink" href="#package-base-frameworks-notice" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/frameworks/notice/__load__.zeek</span></p>
-<p><span class="xref std std-doc">/scripts/base/frameworks/notice/main.zeek</span></p>
-<blockquote>
-<div><p>This is the notice framework which enables Zeek to “notice” things which
-are odd or potentially bad.  Decisions of the meaning of various notices
-need to be done per site because Zeek does not ship with assumptions about
-what is bad activity for sites.  More extensive documentation about using
-the notice framework can be found in <span class="xref std std-doc">/frameworks/notice</span>.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/notice/weird.zeek</span></p>
-<blockquote>
-<div><p>This script provides a default set of actions to take for “weird activity”
-events generated from Zeek’s event engine.  Weird activity is defined as
-unusual or exceptional activity that can indicate malformed connections,
-traffic that doesn’t conform to a particular protocol, malfunctioning
-or misconfigured hardware, or even an attacker attempting to avoid/confuse
-a sensor.  Without context, it’s hard to judge whether a particular
-category of weird activity is interesting, but this script provides
-a starting point for the user.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/notice/actions/email_admin.zeek</span></p>
-<blockquote>
-<div><p>Adds a new notice action type which can be used to email notices
-to the administrators of a particular address space as set by
-<a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/utils/site.zeek.html#id-Site::local_admins" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Site::local_admins</span></code></a> if the notice contains a source
-or destination address that lies within their space.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/notice/actions/page.zeek</span></p>
-<blockquote>
-<div><p>Allows configuration of a pager email address to which notices can be sent.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/notice/actions/add-geodata.zeek</span></p>
-<blockquote>
-<div><p>This script adds geographic location data to notices for the “remote”
-host in a connection.  It does make the assumption that one of the
-addresses in a connection is “local” and one is “remote” which is
-probably a safe assumption to make in most cases.  If both addresses
-are remote, it will use the $src address.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/notice/actions/pp-alarms.zeek</span></p>
-<blockquote>
-<div><p>Notice extension that mails out a pretty-printed version of alarm.log
-in regular intervals, formatted for better human readability. If activated,
-that replaces the default summary mail having the raw log output.</p>
-</div></blockquote>
-</div>
-<div class="section" id="package-base-frameworks-cluster">
-<h1>Package: base/frameworks/cluster<a class="headerlink" href="#package-base-frameworks-cluster" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/frameworks/cluster/__load__.zeek</span></p>
-<p><span class="xref std std-doc">/scripts/base/frameworks/cluster/main.zeek</span></p>
-<blockquote>
-<div><p>A framework for establishing and controlling a cluster of Zeek instances.
-In order to use the cluster framework, a script named
-<code class="docutils literal notranslate"><span class="pre">cluster-layout.zeek</span></code> must exist somewhere in Zeek’s script search path
-which has a cluster definition of the <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/cluster/main.zeek.html#id-Cluster::nodes" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Cluster::nodes</span></code></a> variable.
-The <code class="docutils literal notranslate"><span class="pre">CLUSTER_NODE</span></code> environment variable or <a class="reference external" href="https://docs.zeek.org/en/current/scripts/base/frameworks/cluster/main.zeek.html#id-Cluster::node" title="(in Zeek vv3.2.0-rc1)"><code class="xref zeek zeek-id docutils literal notranslate"><span class="pre">Cluster::node</span></code></a>
-must also be sent and the cluster framework loaded as a package like
-<code class="docutils literal notranslate"><span class="pre">&#64;load</span> <span class="pre">base/frameworks/cluster</span></code>.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/frameworks/cluster/pools.zeek</span></p>
-<blockquote>
-<div><p>Defines an interface for managing pools of cluster nodes.  Pools are
-a useful way to distribute work or data among nodes within a cluster.</p>
-</div></blockquote>
-</div>
-<div class="section" id="package-base-frameworks-control">
-<h1>Package: base/frameworks/control<a class="headerlink" href="#package-base-frameworks-control" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/frameworks/control/__load__.zeek</span></p>
-<p><span class="xref std std-doc">/scripts/base/frameworks/control/main.zeek</span></p>
-<blockquote>
-<div><p>The control framework provides the foundation for providing “commands”
-that can be taken remotely at runtime to modify a running Zeek instance
-or collect information from the running instance.</p>
-</div></blockquote>
-</div>
-<div class="section" id="package-base-protocols-dns">
-<h1>Package: base/protocols/dns<a class="headerlink" href="#package-base-protocols-dns" title="Permalink to this headline">¶</a></h1>
-<p><span class="xref std std-doc">/scripts/base/protocols/dns/__load__.zeek</span></p>
-<p><span class="xref std std-doc">/scripts/base/protocols/dns/consts.zeek</span></p>
-<blockquote>
-<div><p>Types, errors, and fields for analyzing DNS data.  A helper file
-for DNS analysis scripts.</p>
-</div></blockquote>
-<p><span class="xref std std-doc">/scripts/base/protocols/dns/main.zeek</span></p>
-<blockquote>
-<div><p>Base DNS analysis script which tracks and logs DNS queries along with
-their responses.</p>
-</div></blockquote>
 </div>
 
 
