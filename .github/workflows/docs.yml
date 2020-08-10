@@ -14,8 +14,8 @@ jobs:
     - name: Install Zeek RPM
       run: sudo $GITHUB_WORKSPACE/.ci_scripts/install_zeek.sh "zeek"
 
-    - name: Install Sphinx theme
-      run: sudo pip3 install -U sphinx_rtd_theme
+    - name: Install Sphinx theme and btest
+      run: sudo pip3 install -U sphinx_rtd_theme btest
 
     - name: Ensure Zeek was correctly installed
       run: |
