@@ -1,0 +1,8 @@
+.. rst-class:: btest-include
+
+    .. code-block:: guess
+      :linenos:
+
+      DNS::do_lookup($country_code="CA") -> DNS::External_Foreign_DNS_Server notice
+      Notice DNS::External_Foreign_DNS_Server: ident=10.0.0.0-3.96.9.6
+
