@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-import sys, os
+import os
+import sys
 
-sys.path.insert(0, os.path.abspath('ext'))
+sys.path.insert(0, os.path.abspath('sphinxcontrib'))
 
-extensions = ['zeek', 'zeek_pygments', 'btest-sphinx', 'sphinx.ext.todo', 'sphinx.ext.intersphinx']
+extensions = ['zeek', 'sphinx.ext.intersphinx']
 
 intersphinx_mapping = {
     'zeek': ('https://docs.zeek.org/en/current', None),
@@ -65,7 +66,7 @@ html_static_path = ['_static']
 def setup(app):
     app.add_css_file("theme_overrides.css")
     from sphinx.highlighting import lexers
-    from zeek_pygments import ZeekLexer
+    from pygments.lexers.dsls import ZeekLexer
     lexers['zeek'] = ZeekLexer()
 
 # Output file base name for HTML help builder.

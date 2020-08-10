@@ -1,112 +1,46 @@
 :orphan:
 
-Package: NCSA/external_dns
-==========================
+========================================
+Zeek Package Documentation: External DNS
+========================================
 
-Zeek Package for External DNS
-================================================
+Package README
+==============
 
-.. image:: https://github.com/grigorescu/external_dns/workflows/btests/badge.svg
-   :target: https://github.com/grigorescu/external_dns/actions
-   :alt: Build Status
+The top-level README has information on how to install and test this Zeek Package.
 
-.. image:: https://github.com/grigorescu/external_dns/workflows/Documentation/badge.svg
-   :target: https://github.io/grigorescu/external_dns/
-   :alt: Documentation Status
+.. toctree::
+   :maxdepth: 2
 
-.. image:: https://coveralls.io/repos/github/grigorescu/external_dns/badge.svg?branch=master
-   :target: https://coveralls.io/repos/github/grigorescu/external_dns?branch=master
-   :alt: Coverage Status
+   README.rst
 
+Package Index
+=============
 
-.. image:: https://img.shields.io/github/license/grigorescu/external_dns
-   :target: ./LICENSE
-   :alt: BSD license
+This Zeek Package installs the following Zeek script packages:
 
+.. include:: build/packages/package_index.rst
 
-Raises a notice when a client is observed querying an external DNS server
+Script Index
+=============
 
-Getting Started
----------------
+This Zeek Package installs the following Zeek scripts:
 
-These instructions will get you a copy of the package up and running on your Zeek cluster. See development for notes on how to install the package in order to hack on or contribute to it.
+.. include:: scripts/index.rst
 
-Prerequisites
--------------
+Load Order
+==========
 
-This is a package designed to run with the `Zeek Network Security Monitor <https://zeek.org>`_. First, `get Zeek <https://zeek.org/get-zeek/>`_. We strive to support both the current feature and LTS releases.
+How scripts get loaded is non-trivial. A quick summary follows.
 
-The recommended installation method is via the `Zeek package manager, zkg <https://docs.zeek.org/projects/package-manager/en/stable/>`_. On any recent system, run `pip install zkg`. After installation, run `zkg autoconfig`. For more information, see the `zkg documentation <https://docs.zeek.org/projects/package-manager/en/stable/quickstart.html>`_.
+The following steps *always* happen, regardless of whether the plugin gets loaded or not.
 
-Installing
-----------
+1. Zeek startup
+2. Plugin activation
+3. :doc:`__preload__.zeek </scripts/__preload__.zeek>` always gets loaded
+   The preload mechanism is primarily for loading types, defined in :doc:`types.zeek </scripts/types.zeek>` which the rest of the scripts depend on.
+4. :doc:`__load__.zeek </scripts/__load__.zeek>` always gets loaded
 
-To install the package, run:
+If the plugin is explicitly loaded (:code:`@load NCSA/external_dns`), the load process continues:
 
-.. code-block:: shell
-
-   zkg install https://github.com/grigorescu/external_dns
-
-
-If this is being installed on a cluster, install the package on the manager, then deploy it via: 
-
-.. code-block:: shell
-
-   zeekctl deploy
-
-
-Running the tests
------------------
-
-`zkg` will run the test suite before installing. To manually run the tests, go into the `tests` directory, and run `make`.
-
-Contributing
-------------
-
-Please read `:doc:./docs/CONTRIBUTING.md`_ for details on how to contribute.
-
-Versioning
-----------
-
-We use `SemVer <http://semver.org/>`_ for versioning. For the versions available, see the `tags on this repository <https://github.com/grigorescu/external_dns/tags>`_.
-
-Credits
--------
-
-
-* Justin Azoff <`jazoff@illinois.edu <mailto:jazoff@illinois.edu>`_>
-
-
-See also the list of `:doc:./contributors`_ who participated in this project.
-
-License
--------
-
-This project is licensed under the BSD license. See the `:doc:./LICENSE`_ file for details.
-
-Acknowledgments
----------------
-
-* ESnet team for Zeek Package Cookie Cutter
-
-:doc:`/scripts/NCSA/external_dns/__load__.zeek`
-
-   This is processed when a user explicitly loads the plugin's script module
-   through `@load NCSA/external_dns`.
-   Include code here that should execute at that point.
-   
-   This is the most common entry point to your plugin's accompanying scripts.
-   
-   File load order, always happens
-     1. Zeek startup
-     2. Plugin activation
-     3. __preload__.zeek always gets loaded
-     4. __load__.zeek always gets loaded
-   
-   ONLY IF the plugin gets loaded via `@load NCSA/external_dns`, this continues:
-     5. @load NCSA/external_dns/__load__.zeek <-- YOU ARE HERE
-
-:doc:`/scripts/NCSA/external_dns/main.zeek`
-
-   Raises a notice when a client is observed querying an external DNS server
-
+5. :doc:`NCSA/external_dns/__load__.zeek </scripts/NCSA/external_dns/__load__.zeek>` then loads the rest of the scripts.

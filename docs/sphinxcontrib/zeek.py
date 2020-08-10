@@ -2,16 +2,12 @@
     The Zeek domain for Sphinx.
 """
 
-def setup(Sphinx):
-    Sphinx.add_domain(ZeekDomain)
-    Sphinx.add_node(see)
-    Sphinx.add_directive_to_domain('zeek', 'see', SeeDirective)
-    Sphinx.connect('doctree-resolved', process_see_nodes)
 
 from sphinx import addnodes
 from sphinx.domains import Domain, ObjType, Index
-from sphinx.locale import _
 from sphinx.directives import ObjectDescription
+from sphinx.errors import SphinxError
+from sphinx.locale import _
 from sphinx.roles import XRefRole
 from sphinx.util.nodes import make_refnode
 from sphinx import version_info
@@ -23,6 +19,16 @@ from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
 from docutils.parsers.rst.roles import set_classes
+
+import zeekygen
+
+def setup(Sphinx):
+    Sphinx.add_domain(ZeekDomain)
+    Sphinx.add_node(see)
+    Sphinx.add_directive_to_domain('zeek', 'see', SeeDirective)
+    Sphinx.connect('doctree-resolved', process_see_nodes)
+
+    zeekygen.setup(Sphinx)
 
 class see(nodes.General, nodes.Element):
     refs = []
