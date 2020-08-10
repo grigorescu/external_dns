@@ -9,7 +9,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   test:
     name: btests on Linux with ${{ matrix.zeek }}
     runs-on: ubuntu-18.04
@@ -36,17 +35,3 @@ jobs:
 
     - name: Run test and zkg install
       run: sudo $GITHUB_WORKSPACE/.ci_scripts/test.sh
-
-    - name: Generate docs
-      run: |
-        source $GITHUB_WORKSPACE/.ci_scripts/set_env_path.sh
-        make -C $GITHUB_WORKSPACE/docs
-      if: matrix.zeek == 'zeek'
-
-    - name: Deploy docs
-      if: matrix.zeek == 'zeek'
-      uses: JamesIves/github-pages-deploy-action@3.5.9
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: docs/html

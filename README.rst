@@ -5,6 +5,10 @@ Zeek Package for External DNS
    :target: https://github.com/grigorescu/external_dns/actions
    :alt: Build Status
 
+.. image:: https://github.com/grigorescu/external_dns/workflows/Build%20Documentation/badge.svg
+   :target: https://github.io/grigorescu/external_dns/
+   :alt: Documentation Status
+
 .. image:: https://coveralls.io/repos/github/grigorescu/external_dns/badge.svg?branch=master
    :target: https://coveralls.io/repos/github/grigorescu/external_dns?branch=master
    :alt: Coverage Status
@@ -54,12 +58,12 @@ Running the tests
 Contributing
 ------------
 
-Please read `CONTRIBUTING.md <./docs/CONTRIBUTING.md>`_ for details on how to contribute.
+Please read `:doc:./docs/CONTRIBUTING.md`_ for details on how to contribute.
 
 Versioning
 ----------
 
-We use `SemVer <http://semver.org/>`_ for versioning. For the versions available, see the `tags on this repository <../../tags>`_.
+We use `SemVer <http://semver.org/>`_ for versioning. For the versions available, see the `tags on this repository <https://github.com/grigorescu/external_dns/tags>`_.
 
 Credits
 -------
@@ -68,12 +72,12 @@ Credits
 * Justin Azoff <`jazoff@illinois.edu <mailto:jazoff@illinois.edu>`_>
 
 
-See also the list of `contributors <contributors>`_ who participated in this project.
+See also the list of `:doc:./contributors`_ who participated in this project.
 
 License
 -------
 
-This project is licensed under the BSD license. See the `LICENSE <LICENSE>`_ file for details.
+This project is licensed under the BSD license. See the `:doc:./LICENSE`_ file for details.
 
 Acknowledgments
 ---------------
