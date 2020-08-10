@@ -1,0 +1,8 @@
+# @TEST-EXEC: btest-rst-cmd -o zeek NCSA/external_dns print_notices %INPUT > output
+# @TEST-EXEC: btest-diff-rst output
+
+local id = conn_id($orig_h=10.0.0.0, $orig_p=3/udp, $resp_h=3.96.9.6, $resp_p=53/udp);
+local loc = geo_location($country_code="CA");
+
+print("DNS::do_lookup($country_code=\"CA\") -> DNS::External_Foreign_DNS_Server notice");
+DNS::do_lookup(id, loc);

@@ -5,6 +5,12 @@ set -e
 
 die() { echo "$*" 1>&2 ; exit 1; }
 
+if [ -s '.stdout' ]
+then
+	grep -v '/btest-doc' .stdout || true > .stdout.tmp
+	mv .stdout.tmp .stdout
+fi
+
 # Make sure we generated no output on stdout or stderr
 find . -type f -size +0 -name '.stdout' | read && die "standard output found"
 find . -type f -size +0 -name '.stderr' | read && die "standard error found"

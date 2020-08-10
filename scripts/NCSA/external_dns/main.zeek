@@ -37,6 +37,32 @@ export {
 		"US",
 	};
 
+	## Given a connection and a location, will generate a notice.
+	##
+	## .. btest:: do_lookup_us
+	##
+	##     # @TEST-EXEC: btest-rst-cmd -o zeek NCSA/external_dns print_notices %INPUT > output
+	##     # @TEST-EXEC: btest-diff-rst output
+	##
+	##     local id = conn_id($orig_h=10.0.0.0, $orig_p=3/udp, $resp_h=8.8.8.8, $resp_p=53/udp);
+	##     local loc = geo_location($country_code="US");
+	##
+	##     print("DNS::do_lookup($country_code=\"US\") -> DNS::External_DNS_Server notice");
+	##     DNS::do_lookup(id, loc);
+	##
+	## .. btest:: do_lookup_external
+	##
+	##     # @TEST-EXEC: btest-rst-cmd -o zeek NCSA/external_dns print_notices %INPUT > output
+	##     # @TEST-EXEC: btest-diff-rst output
+	##
+	##     local id = conn_id($orig_h=10.0.0.0, $orig_p=3/udp, $resp_h=3.96.9.6, $resp_p=53/udp);
+	##     local loc = geo_location($country_code="CA");
+	##
+	##     print("DNS::do_lookup($country_code=\"CA\") -> DNS::External_Foreign_DNS_Server notice");
+	##     DNS::do_lookup(id, loc);
+	##
+	global do_lookup: function(id: conn_id, loc: geo_location);
+
 }
 
 function do_lookup(id: conn_id, loc: geo_location)

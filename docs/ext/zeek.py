@@ -171,6 +171,7 @@ class ZeekEnum(ZeekGeneric):
                 self.env.domaindata['zeek']['notices'] = []
             self.env.domaindata['zeek']['notices'].append(
                                 (m[0], self.env.docname, targetname))
+
         self.indexnode['entries'].append(make_index_tuple('single',
                                           "%s (enum values); %s" % (m[1], m[0]),
                                           targetname, targetname))
@@ -288,8 +289,6 @@ class ZeekDomain(Domain):
                                         objects[objtype, target],
                                         objtype + '-' + target,
                                         contnode, target + ' ' + objtype)
-                else:
-                    logger.warning('%s: unknown target for ":zeek:%s:`%s`"', fromdocname, typ, target)
 
     def get_objects(self):
         for (typ, name), docname in self.data['objects'].items():
