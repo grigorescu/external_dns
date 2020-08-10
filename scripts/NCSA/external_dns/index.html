@@ -85,23 +85,55 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Package: NCSA/external_dns</a></li>
-<li><a class="reference internal" href="#zeek-package-for-external-dns">Zeek Package for External DNS</a><ul>
-<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
-<li><a class="reference internal" href="#installing">Installing</a></li>
-<li><a class="reference internal" href="#running-the-tests">Running the tests</a></li>
-<li><a class="reference internal" href="#contributing">Contributing</a></li>
-<li><a class="reference internal" href="#versioning">Versioning</a></li>
-<li><a class="reference internal" href="#credits">Credits</a></li>
-<li><a class="reference internal" href="#license">License</a></li>
-<li><a class="reference internal" href="#acknowledgments">Acknowledgments</a></li>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">Zeek Package for External DNS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#installing">Installing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#running-the-tests">Running the tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#credits">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#acknowledgments">Acknowledgments</a></li>
 </ul>
 </li>
 </ul>
-</div>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../__load__.zeek.html">__load__.zeek</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../__load__.zeek.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../__load__.zeek.html#detailed-interface">Detailed Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../types.zeek.html">types.zeek</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../types.zeek.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../types.zeek.html#detailed-interface">Detailed Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../__preload__.zeek.html">__preload__.zeek</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../__preload__.zeek.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../__preload__.zeek.html#detailed-interface">Detailed Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="__load__.zeek.html">NCSA/external_dns/__load__.zeek</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="__load__.zeek.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="__load__.zeek.html#detailed-interface">Detailed Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="main.zeek.html">NCSA/external_dns/main.zeek</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="main.zeek.html#summary">Summary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="main.zeek.html#runtime-options">Runtime Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="main.zeek.html#redefinitions">Redefinitions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="main.zeek.html#detailed-interface">Detailed Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="main.zeek.html#id1">Runtime Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
             
           
         </div>
@@ -168,86 +200,19 @@
   <div class="section" id="package-ncsa-external-dns">
 <h1>Package: NCSA/external_dns<a class="headerlink" href="#package-ncsa-external-dns" title="Permalink to this headline">¶</a></h1>
 </div>
-<div class="section" id="zeek-package-for-external-dns">
-<h1>Zeek Package for External DNS<a class="headerlink" href="#zeek-package-for-external-dns" title="Permalink to this headline">¶</a></h1>
-<a class="reference external image-reference" href="https://github.com/grigorescu/external_dns/actions"><img alt="Build Status" src="https://github.com/grigorescu/external_dns/workflows/btests/badge.svg" /></a>
-<a class="reference external image-reference" href="https://github.io/grigorescu/external_dns/"><img alt="Documentation Status" src="https://github.com/grigorescu/external_dns/workflows/Documentation/badge.svg" /></a>
-<a class="reference external image-reference" href="https://coveralls.io/repos/github/grigorescu/external_dns?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/grigorescu/external_dns/badge.svg?branch=master" /></a>
-<a class="reference external image-reference" href="./LICENSE"><img alt="BSD license" src="https://img.shields.io/github/license/grigorescu/external_dns" /></a>
-<p>Raises a notice when a client is observed querying an external DNS server</p>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<p>These instructions will get you a copy of the package up and running on your Zeek cluster. See development for notes on how to install the package in order to hack on or contribute to it.</p>
-</div>
-<div class="section" id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>This is a package designed to run with the <a class="reference external" href="https://zeek.org">Zeek Network Security Monitor</a>. First, <a class="reference external" href="https://zeek.org/get-zeek/">get Zeek</a>. We strive to support both the current feature and LTS releases.</p>
-<p>The recommended installation method is via the <a class="reference external" href="https://docs.zeek.org/projects/package-manager/en/stable/">Zeek package manager, zkg</a>. On any recent system, run <cite>pip install zkg</cite>. After installation, run <cite>zkg autoconfig</cite>. For more information, see the <a class="reference external" href="https://docs.zeek.org/projects/package-manager/en/stable/quickstart.html">zkg documentation</a>.</p>
-</div>
-<div class="section" id="installing">
-<h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
-<p>To install the package, run:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>zkg install https://github.com/grigorescu/external_dns
-</pre></div>
-</div>
-<p>If this is being installed on a cluster, install the package on the manager, then deploy it via:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>zeekctl deploy
-</pre></div>
-</div>
-</div>
-<div class="section" id="running-the-tests">
-<h2>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h2>
-<p><cite>zkg</cite> will run the test suite before installing. To manually run the tests, go into the <cite>tests</cite> directory, and run <cite>make</cite>.</p>
-</div>
-<div class="section" id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
-<p>Please read <a href="#id1"><span class="problematic" id="id2">`:doc:./docs/CONTRIBUTING.md`_</span></a> for details on how to contribute.</p>
-</div>
-<div class="section" id="versioning">
-<h2>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h2>
-<p>We use <a class="reference external" href="http://semver.org/">SemVer</a> for versioning. For the versions available, see the <a class="reference external" href="https://github.com/grigorescu/external_dns/tags">tags on this repository</a>.</p>
-</div>
-<div class="section" id="credits">
-<h2>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Justin Azoff &lt;<a class="reference external" href="mailto:jazoff&#37;&#52;&#48;illinois&#46;edu">jazoff<span>&#64;</span>illinois<span>&#46;</span>edu</a>&gt;</p></li>
-</ul>
-<p>See also the list of <a href="#id3"><span class="problematic" id="id4">`:doc:./contributors`_</span></a> who participated in this project.</p>
-</div>
-<div class="section" id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
-<p>This project is licensed under the BSD license. See the <a href="#id5"><span class="problematic" id="id6">`:doc:./LICENSE`_</span></a> file for details.</p>
-</div>
-<div class="section" id="acknowledgments">
-<h2>Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>ESnet team for Zeek Package Cookie Cutter</p></li>
-</ul>
+<div class="section" id="external-dns-detection">
+<h1>External DNS Detection<a class="headerlink" href="#external-dns-detection" title="Permalink to this headline">¶</a></h1>
+<p>This script will detect usage of external DNS servers.</p>
 <p><a class="reference internal" href="__load__.zeek.html"><span class="doc">NCSA/external_dns/__load__.zeek</span></a></p>
 <blockquote>
 <div><p>This is processed when a user explicitly loads the plugin’s script module
 through <cite>&#64;load NCSA/external_dns</cite>.
 Include code here that should execute at that point.</p>
-<p>This is the most common entry point to your plugin’s accompanying scripts.</p>
-<dl class="simple">
-<dt>File load order, always happens</dt><dd><ol class="arabic simple">
-<li><p>Zeek startup</p></li>
-<li><p>Plugin activation</p></li>
-<li><p>__preload__.zeek always gets loaded</p></li>
-<li><p>__load__.zeek always gets loaded</p></li>
-</ol>
-</dd>
-<dt>ONLY IF the plugin gets loaded via <cite>&#64;load NCSA/external_dns</cite>, this continues:</dt><dd><ol class="arabic simple" start="5">
-<li><p>&#64;load NCSA/external_dns/__load__.zeek &lt;– YOU ARE HERE</p></li>
-</ol>
-</dd>
-</dl>
 </div></blockquote>
 <p><a class="reference internal" href="main.zeek.html"><span class="doc">NCSA/external_dns/main.zeek</span></a></p>
 <blockquote>
 <div><p>Raises a notice when a client is observed querying an external DNS server</p>
 </div></blockquote>
-</div>
 </div>
 
 

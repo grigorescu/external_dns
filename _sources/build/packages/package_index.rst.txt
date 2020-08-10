@@ -1,0 +1,7 @@
+:doc:`NCSA/external_dns </scripts/NCSA/external_dns/index>`
+
+   External DNS Detection
+   ======================
+   
+   This script will detect usage of external DNS servers.
+

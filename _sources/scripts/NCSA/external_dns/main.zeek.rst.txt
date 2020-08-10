@@ -7,7 +7,7 @@ NCSA/external_dns/main.zeek
 Raises a notice when a client is observed querying an external DNS server
 
 :Namespace: DNS
-:Imports: :doc:`base/frameworks/notice </scripts/base/frameworks/notice/index>`, :doc:`base/protocols/dns </scripts/base/protocols/dns/index>`
+:Imports: :doc:`base/frameworks/notice <scripts/base/frameworks/notice/index>`, :doc:`base/protocols/dns <scripts/base/protocols/dns/index>`
 
 Summary
 ~~~~~~~
@@ -39,11 +39,11 @@ Runtime Options
       ::
 
          {
-            208.67.220.123/32,
-            8.8.4.4/32,
-            208.67.220.220/32,
+            8.8.8.8/32,
             208.67.222.222/32,
-            8.8.8.8/32
+            8.8.4.4/32,
+            208.67.220.123/32,
+            208.67.220.220/32
          }
 
 
@@ -63,5 +63,7 @@ Runtime Options
 
 
    Anything not in this list is considered a foreign country
+
+
 
 
