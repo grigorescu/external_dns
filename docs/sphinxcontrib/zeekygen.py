@@ -1,3 +1,5 @@
+from sphinx.errors import SphinxError
+
 from sphinx.util import logging
 logger = logging.getLogger(__name__)
 
@@ -13,6 +15,7 @@ rst_output_dir = os.path.join(cwd, "build")
 rst_packages_dir = os.path.join(rst_output_dir, "packages")
 temp_script_index = os.path.join(rst_script_dir, "tempindex")
 script_index = os.path.join(rst_script_dir, "index.rst")
+package_index = os.path.join(rst_packages_dir, "package_index.rst")
 
 shutil.rmtree(rst_script_dir)
 
@@ -49,7 +52,6 @@ def run_zeek_package(packages):
 
     conf = ""
     for p in packages:
-        conf += "\t".join(["package_index", p, rst_packages_dir + "/package_index.rst"]) + "\n"
         conf += "\t".join(["package", p, rst_script_dir + "/" + p + "/index.rst"]) +  "\n"
     run_zeek(" ".join(packages), conf)
 
@@ -117,3 +119,11 @@ def setup(app):
                      logger.info("Fixing links in %s", rst_file)
                      f.seek(0)
                      f.write(data)
+
+    # Generate the package index
+    with open(package_index, 'w') as f:
+        f.write(".. toctree::\n   :maxdepth: 2\n\n")
+        for p in packages:
+            f.write("   " + p + "</scripts/" + p + "/index>")
+        f.write("\n")
+
