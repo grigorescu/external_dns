@@ -17,7 +17,7 @@ The top-level README has information on how to install and test this Zeek Packag
 Package Index
 =============
 
-This Zeek Package installs the following Zeek script packages:
+For Zeek scripting details, such as options, functions and events, see the auto-generated documentation:
 
 .. include:: build/packages/package_index.rst
 
@@ -44,3 +44,10 @@ The following steps *always* happen, regardless of whether the plugin gets loade
 If the plugin is explicitly loaded (:code:`@load NCSA/external_dns`), the load process continues:
 
 5. :doc:`NCSA/external_dns/__load__.zeek </scripts/NCSA/external_dns/__load__.zeek>` then loads the rest of the scripts.
+
+Reference
+=========
+
+.. toctree::
+   
+   genindex

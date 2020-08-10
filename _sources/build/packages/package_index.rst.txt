@@ -1,7 +1,4 @@
-:doc:`NCSA/external_dns </scripts/NCSA/external_dns/index>`
+.. toctree::
+   :maxdepth: 2
 
-   External DNS Detection
-   ======================
-   
-   This script will detect usage of external DNS servers.
-
+   NCSA/external_dns</scripts/NCSA/external_dns/index>
