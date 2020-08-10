@@ -1,7 +1,7 @@
 Zeek Package for External DNS
 ================================================
 
-.. image:: https://github.com/grigorescu/external_dns/workflows/Package%20btests/badge.svg
+.. image:: https://github.com/grigorescu/external_dns/workflows/btests/badge.svg
    :target: https://github.com/grigorescu/external_dns/actions
    :alt: Build Status
 

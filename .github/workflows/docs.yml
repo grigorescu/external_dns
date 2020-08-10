@@ -10,8 +10,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Install Zeek RPM
       run: sudo $GITHUB_WORKSPACE/.ci_scripts/install_zeek.sh "zeek"
+
+    - name: Install Sphinx theme
+      run: sudo pip3 install -U sphinx_rtd_theme
 
     - name: Ensure Zeek was correctly installed
       run: |
