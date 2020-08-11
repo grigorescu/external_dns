@@ -2,7 +2,6 @@
     The Zeek domain for Sphinx.
 """
 
-
 from sphinx import addnodes
 from sphinx.domains import Domain, ObjType, Index
 from sphinx.directives import ObjectDescription
@@ -16,9 +15,9 @@ from sphinx.util import logging
 logger = logging.getLogger(__name__)
 
 from docutils import nodes
-from docutils.parsers.rst import Directive
-from docutils.parsers.rst import directives
-from docutils.parsers.rst.roles import set_classes
+from docutils.parsers.rst import Directive, directives
+
+from optparse import Values
 
 import zeekygen
 
@@ -87,6 +86,44 @@ class ZeekGeneric(ObjectDescription):
         if 'idtypes' not in self.env.domaindata['zeek']:
             self.env.domaindata['zeek']['idtypes'] = {}
         self.env.domaindata['zeek']['idtypes'][idname] = self.objtype
+
+    def after_content(self):
+        ObjectDescription.after_content(self)
+
+        if not self.content:
+            return
+
+        node = nodes.paragraph()
+        self.state.nested_parse(self.content, 0, node)
+
+        # node    <paragraph>
+        # node[0]        <field_list>
+        # node[0][0]            <field>
+        # node[0][0][0]                <field_name>
+        # node[0][0][0][0]                     Type
+        # node[0][0][1]                <field_body>
+        # node[0][0][1][0]                    <paragraph>
+        # node[0][0][1][0][0]                        <pending_xref refdoc="scripts/NCSA/external_dns/main.zeek" refdomain="zeek" refexplicit="False" reftarget="function" reftype="type" refwarn="False">
+        # node[0][0][1][0][0][0]                            <literal classes="xref zeek zeek-type">
+        # node[0][0][1][0][0][0][0]                                function
+
+        sig_done = False
+        sig = f"function {self.names[0]}"
+        try:
+            func_def = node.children[0][0][1][0]
+            node_type = func_def.children[0][0][0]
+            if node_type == "function":
+                for a in func_def.children[1:-2:2]:
+                    sig += a.title().strip()
+                sig_done = True
+        except Exception:
+            pass
+
+        if sig_done:
+            sig += ")"
+            print(sig)
+        if not node.children or node.children[-1].tagname != "paragraph":
+            logger.error(f"{self.names[0]} is undocumented")
 
     def add_target_and_index(self, name, sig, signode):
         targetname = self.objtype + '-' + name

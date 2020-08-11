@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath('sphinxcontrib'))
 
-extensions = ['zeek', 'sphinx.ext.intersphinx']
+extensions = ['zeek', 'sphinx.ext.githubpages', 'sphinx.ext.intersphinx']
 
 intersphinx_mapping = {
     'zeek': ('https://docs.zeek.org/en/current', None),
