@@ -15,7 +15,7 @@ intersphinx_mapping = {
 templates_path = ['_templates']
 
 # General information about the project.
-project = u'External Use of Sensitive Protocols'
+project = u'Use of External DNS Server'
 copyright = u'2020, ESnet'
 
 version = u"source"
